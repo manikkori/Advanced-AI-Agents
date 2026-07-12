@@ -29,3 +29,7 @@ GROQ_API_KEY=your_api_key_here
 * **`01_langchain_setup.js`**
   * **Objective:** Framework initialization.
   * **Details:** Sets up the `ChatGroq` model globally and replaces manual API calls with LangChain's cleaner `.invoke()` method. Demonstrates standard error handling and model configuration.
+
+* **`02_rag_data_prep.js`**
+  * **Objective:** Data Preparation for RAG.
+  * **Details:** Uses `PDFLoader` to extract raw text from PDF files. Implements `RecursiveCharacterTextSplitter` to divide the text into smaller, overlapping chunks (1000 chars) to maintain context and respect LLM token limits.
