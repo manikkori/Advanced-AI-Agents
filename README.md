@@ -12,9 +12,9 @@ npm init -y
 npm pkg set type="module"
 ```
 
-**2. Install core dependencies:**
+**2. Install all dependencies:**
 ```bash
-npm install @langchain/core @langchain/groq dotenv
+npm install @langchain/core @langchain/groq dotenv pdf-parse @langchain/community @langchain/textsplitters
 ```
 
 **3. Environment Variables:**
