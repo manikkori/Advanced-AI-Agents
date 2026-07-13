@@ -33,3 +33,7 @@ GROQ_API_KEY=your_api_key_here
 * **`02_rag_data_prep.js`**
   * **Objective:** Data Preparation for RAG.
   * **Details:** Uses `PDFLoader` to extract raw text from PDF files. Implements `RecursiveCharacterTextSplitter` to divide the text into smaller, overlapping chunks (1000 chars) to maintain context and respect LLM token limits.
+  
+* **`03_rag_embeddings.js`**
+  * **Objective:** Vector Embeddings.
+  * **Details:** Converts text into numerical vectors using Hugging Face's `all-MiniLM-L6-v2` model to understand semantic meaning.
