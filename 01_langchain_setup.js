@@ -5,7 +5,6 @@ import 'dotenv/config';
 const model = new ChatGroq({
     apiKey:process.env.GROQ_API_KEY,
     model: "openai/gpt-oss-120b",
-    temperature:0,// 0 = strict logical answers , no hallucination
 });
 
 //main function
