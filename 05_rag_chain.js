@@ -1,0 +1,33 @@
+import { ChatGroq } from "@langchain/groq";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
+import { MemoryVectorStore } from "langchain/vectorstores/memory";
+
+//new langchain imports (chain banane ke liye)
+import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
+import { createRetrievalChain } from "langchain/chains/retrieval";
+
+import "dotenv/config";
+
+async function main(){
+
+    console.log("BCA.pdf Data preparing, please wait...");
+
+    //1. llm and embeddings setup
+    const llm = new ChatGroq({
+        apiKey:process.env.GROQ_API_KEY,
+        model:"openai/gpt-oss-120b",
+        temperature:0,
+    });
+
+    const embeddings = new HuggingFaceTransformersEmbeddings({
+        modelName:"Xenova/gte-small"
+    });
+
+
+    
+
+}
+main()
