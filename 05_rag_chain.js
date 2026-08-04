@@ -26,6 +26,19 @@ async function main(){
         modelName:"Xenova/gte-small"
     });
 
+    //2. pdf loader and chunking sys
+    const loader = new PDFLoader("./BCA.pdf");
+    const docs =  await loader.load();
+
+    const textSplitter = new RecursiveCharacterTextSplitter({
+        chunkSize:1000,
+        chunkOverlap:200,
+    });
+
+    const chunks = await textSplitter.splitDocuments(docs);
+    
+
+
 
     
 
