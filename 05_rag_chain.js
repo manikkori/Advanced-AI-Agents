@@ -36,6 +36,10 @@ async function main(){
     });
 
     const chunks = await textSplitter.splitDocuments(docs);
+
+    //3. vector store
+    const vectorStore = await MemoryVectorStore.fromDocuments(chunks, embeddings);
+
     
 
 
