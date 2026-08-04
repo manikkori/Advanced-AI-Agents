@@ -72,7 +72,7 @@ async function main(){
     console.log("RAG pipeline ready!...");
 
     //user query
-    const question = "give me math's topics";
+    const question = "give me c programming topic";
     console.log("User Question : ", question);
 
     //7. run the chain
