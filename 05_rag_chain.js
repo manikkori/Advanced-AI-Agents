@@ -40,6 +40,9 @@ async function main(){
     //3. vector store
     const vectorStore = await MemoryVectorStore.fromDocuments(chunks, embeddings);
 
+    //4. create retriever (finds top 3 chunks)
+    const retriever = vectorStore.asRetriever({k:3})
+
     
 
 
