@@ -69,11 +69,20 @@ async function main(){
         retriever:retriever,
     });
 
-    
+    console.log("RAG pipeline ready!...");
 
+    //user query
+    const question = "give me math's topics";
+    console.log("User Question : ", question);
 
+    //7. run the chain
+    const response = await retriever.invoke({
+        input: question,
+    });
 
+    //printing output
+    console.log(`\n [AI Agent] : \n ${response.answer}`);
     
 
 }
-main()
+main().catch(console.error);
