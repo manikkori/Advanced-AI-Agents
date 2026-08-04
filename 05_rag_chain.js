@@ -76,7 +76,7 @@ async function main(){
     console.log("User Question : ", question);
 
     //7. run the chain
-    const response = await retriever.invoke({
+    const response = await retrievalChain.invoke({
         input: question,
     });
 
