@@ -43,6 +43,19 @@ async function main(){
     //4. create retriever (finds top 3 chunks)
     const retriever = vectorStore.asRetriever({k:3})
 
+    //5. create prompt template
+    const prompt = ChatPromptTemplate.fromTemplate(`
+
+        You are a expert assistant. niche diye gye context ko dhyan se padh or user ke swal ka answer kar.
+        Agar answer is context me nhi hai to apni tarf se jwab mat de , sidha bol ki "mujhe is data/pdf me ye info nhi mili. answer in hinglish or english.
+
+        Context : {context}
+
+        Question : {input}
+
+        answer : 
+    `);
+
     
 
 
