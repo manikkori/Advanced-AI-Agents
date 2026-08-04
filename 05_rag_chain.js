@@ -56,6 +56,19 @@ async function main(){
         answer : 
     `);
 
+    //6. chaining
+    //a. combine llm and prompt
+    const documentChain = await createStuffDocumentsChain({
+        llm:llm,
+        prompt:prompt,
+    });
+
+    //b. combine retriever and ducumentChain into a single pipeline
+    const retrievalChain = await createRetrievalChain({
+        combineDocsChain:documentChain,
+        retriever:retriever,
+    });
+
     
 
 
