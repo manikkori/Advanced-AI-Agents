@@ -35,7 +35,7 @@ async function main(){
         chunkOverlap:200,
     });
 
-    const chunks = await textSplitter.splitDocuments(docs);
+    const chunks = await textSplitter.splitDocuments(docs); 
 
     //3. vector store
     const vectorStore = await MemoryVectorStore.fromDocuments(chunks, embeddings);
@@ -75,7 +75,7 @@ async function main(){
     const question = "give me c programming topic";
     console.log("User Question : ", question);
 
-    //7. run the chain
+    //7. run the chain 
     const response = await retrievalChain.invoke({
         input: question,
     });
