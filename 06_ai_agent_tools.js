@@ -1,6 +1,6 @@
 import { ChatGroq } from "@langchain/groq";
 import { tool } from "@langchain/core/tools";
-import { createReactAgent } from "langchain/agents";
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { symbol, z } from "zod";
 import "dotenv/config";
 import { Schema } from "zod/v3";
@@ -20,7 +20,7 @@ const weatherTool = tool(
     {
         name: "live_weather",
         description:"Fetches the real-time, live weather conditions for any given city. Use this when the user asks about current weather.",
-        Schema: z.object({
+        schema: z.object({
             city: z.string().describe("The name of the city, like 'Delhi', 'New York' ")
         }),
     }
@@ -53,7 +53,7 @@ const cryptoTool = tool(
 
 async function main(){
 
-    console.log("\nConnecting AI Agent, please wait....\n");
+    console.log("\nConnecting AI Agent, please wait....");
 
     //1. setup  llm 
     const llm = new ChatGroq({
@@ -70,6 +70,23 @@ async function main(){
         llm:llm,
         tools:tools
     });
+
+    console.log("\nAgent is ready..\n");
+
+    //setup weather response logic
+    const question1 = "Hapur, Uttar Pradesh current weather ?";
+    console.log(`User Question : ${question1}`);
+    const response1 = await agent.invoke({
+        messages:[
+            {
+                role:"user",
+                content:question1
+            }
+        ]
+    });
+    console.log(`Agent : ${response1.messages[response1.messages.length - 1].content}\n`);
+
+    
     
 
     
