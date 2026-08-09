@@ -1,3 +1,16 @@
+# Advanced Autonomous AI Agents (Node.js)
+
+Welcome to the **Advanced AI Agents** repository. This project explores the transition from standard LLM chat interfaces to fully autonomous, action-oriented AI systems built with **JavaScript/Node.js**, **LangGraph**, and **LangChain**.
+
+The core focus of this repository is to build resilient AI backends capable of complex reasoning, dynamic decision-making, and seamless integration into modern full-stack (MERN) environments.
+
+## Architectural Capabilities
+
+- **Autonomous Agentic Workflows:** Implementing ReAct (Reason + Act) loops where agents independently decide the sequence of actions required to solve complex user queries.
+- **Dynamic Tool Orchestration:** Equipping LLMs with custom, real-world tools, external API execution, and structured output generation validated strictly via Zod.
+- **Enterprise-Grade RAG Pipelines:** Advanced Retrieval-Augmented Generation using semantic search and local embedding models for contextual data retrieval.
+- **Full-Stack Integration Ready:** Modular Node.js architecture designed to be easily plugged into Express.js endpoints for scalable web applications.
+
 # Advanced AI Agents (LangChain & RAG) 🚀
 
 This repository contains advanced, production-ready AI Agent architectures. Transitioning from raw Node.js tool-calling loops, this project utilizes **LangChain** to build scalable AI pipelines, Retrieval-Augmented Generation (RAG) systems, and Multi-Agent workflows.
