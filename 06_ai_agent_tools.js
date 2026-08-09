@@ -1,9 +1,8 @@
 import { ChatGroq } from "@langchain/groq";
 import { tool } from "@langchain/core/tools";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { symbol, z } from "zod";
+import { z } from "zod";
 import "dotenv/config";
-import { Schema } from "zod/v3";
 
 //tool 1 - Live weather API 
 const weatherTool = tool(
