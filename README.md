@@ -60,10 +60,19 @@ Place a sample PDF file (e.g., `example.pdf`) in the root directory for the RAG 
   * **Objective:** Vector Database & Semantic Retrieval.
   * **Details:** Combines chunking and embeddings to build an in-memory Vector Store (`MemoryVectorStore`). Performs `similaritySearch` to mathematically retrieve relevant document sections based on user queries, overcoming exact keyword match limitations.
 
+### `05_rag_chain.js` - Retrieval-Augmented Generation (RAG) Architecture
+Implements a complete RAG pipeline to chat with external documents (PDFs).
+- **Core Concepts:** Document loading, text splitting, and semantic search.
+- **Tech Stack:** Uses `@langchain/community` for local HuggingFace embeddings (`all-MiniLM-L6-v2`) and in-memory vector stores to provide context-aware responses without relying on outdated LLM training data.
+
+### `06_ai_agent_tools.js` - Autonomous ReAct Agent with Tool Orchestration
+Transitions from static chains to a dynamic, autonomous agent capable of reasoning and taking action.
+- **Core Concepts:** ReAct (Reason + Act) loop, Tool calling, and strict schema validation.
+- **Tech Stack:** Powered by `@langchain/langgraph` and `zod`. The agent is equipped with custom tools (e.g., Live external API fetchers) and autonomously decides when and how to execute them based on user prompts.
 ---
 
 ## 🚀 How to Run
 To test the semantic search pipeline, ensure your PDF is in the root directory and run:
 ```bash
-node 04_rag_vector_store.js
+node filename.js
 ```
