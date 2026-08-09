@@ -86,9 +86,18 @@ async function main(){
     });
     console.log(`Agent : ${response1.messages[response1.messages.length - 1].content}\n`);
 
-    
-    
-
+    //setup crypto response logic
+    const question2 = "tell me Bitcoin (BTC) and Ethereum (ETH) current price.";
+    console.log(`User Question : ${question2}`);
+    const response2 = await agent.invoke({
+        messages:[
+            {
+                role:"user",
+                content:question2
+            }
+        ],
+    });
+    console.log(`Agent : ${response2.messages[response2.messages.length - 1].content}\n`);
     
 
 }
