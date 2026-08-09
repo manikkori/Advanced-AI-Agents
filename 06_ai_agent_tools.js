@@ -65,6 +65,12 @@ async function main(){
     //2. giving tools
     const tools = [weatherTool, cryptoTool];
 
+    //3. combine llm and tools
+    const agent = createReactAgent({
+        llm:llm,
+        tools:tools
+    });
+    
 
     
 
