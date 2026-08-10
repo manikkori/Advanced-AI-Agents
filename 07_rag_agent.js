@@ -58,7 +58,7 @@ async function main(){
     //3. setup lmm (brain)
     const llm = new ChatGroq({
         apiKey:process.env.GROQ_API_KEY,
-        model:"llama-3.3-70b-versatile",
+        model:"qwen/qwen3.6-27b",
         temperature:0
     });
     
@@ -69,7 +69,7 @@ async function main(){
     });
 
     //user question
-    const question = "Give me a list of BCA first semester's subjects in bullet points."
+    const question = "BCA ke first semester me kon kon se subjects hain? List unko bullet points me do."
     console.log(`[User quesion] : ${question}\n`);
 
     //5. Execution...
