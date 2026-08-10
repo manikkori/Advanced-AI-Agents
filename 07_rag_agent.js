@@ -31,8 +31,32 @@ async function main(){
 
     console.log("RAG pipeline ready...\n");
 
-    
-    
+    //2. creating RAG tool
+    const ragTool = tool(
+        async ({query})=>{
+            console.log("Agent is running tool wait...\n");
+            try {
+                //searching the pdf using retriever
+                const result = await retriever.invoke(query);
+                //Extract text from the retrieved chunks and combine them
+                const context = result.map(doc => doc.pageContent).join("\n\n");
+                return `found information in pdf : ${context}`
+            } catch (error) {
+                return `Error : ${error}`;
+            }
+            
+        },
+        {
+            name:"search_pdf_document",
+            description:"Use this tool to find factual information, syllabus, subjects, or any details from the provided BCA PDF document. Always use this tool when the user asks about the course/college.",
+            schema: z.object({
+                query: z.string().describe("The exact search query to look for in the document")
+            })
+        }
+    );
+
+
+
 
 
 }
