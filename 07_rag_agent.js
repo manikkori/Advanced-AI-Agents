@@ -61,7 +61,12 @@ async function main(){
         model:"openai/gpt-oss-120b",
         temperature:0
     });
-
+    
+    //4. combine the llm and the ouur RAG tool
+    const agent = createReactAgent({
+        llm:llm,
+        tools: [ragTool],
+    });
 
 }
 
