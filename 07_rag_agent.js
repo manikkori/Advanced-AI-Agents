@@ -26,7 +26,7 @@ async function main(){
         model:"Xenova/all-MiniLM-L6-v2"
     });
 
-    const vectorStore = await MemoryVectorStore.fromDocuments(docs, embeddings);
+    const vectorStore = await MemoryVectorStore.fromDocuments(chunks, embeddings);
     const retriever = vectorStore.asRetriever({k:5});
 
     console.log("RAG pipeline ready...\n");
@@ -34,8 +34,8 @@ async function main(){
     //2. creating RAG tool
     const ragTool = tool(
         async ({query})=>{
-            console.log("Agent is running tool wait...\n");
             try {
+                console.log(`[Agent is running Tool] Searching PDF for: "${query}"...\n`);
                 //searching the pdf using retriever
                 const result = await retriever.invoke(query);
                 //Extract text from the retrieved chunks and combine them
@@ -58,7 +58,7 @@ async function main(){
     //3. setup lmm (brain)
     const llm = new ChatGroq({
         apiKey:process.env.GROQ_API_KEY,
-        model:"openai/gpt-oss-120b",
+        model:"llama-3.3-70b-versatile",
         temperature:0
     });
     
@@ -68,6 +68,22 @@ async function main(){
         tools: [ragTool],
     });
 
+    //user question
+    const question = "Give me a list of BCA first semester's subjects in bullet points."
+    console.log(`[User quesion] : ${question}\n`);
+
+    //5. Execution...
+    const response = await agent.invoke({
+        messages:[
+            {
+                role:"user",
+                content:question
+            }
+        ]
+    });
+    
+    console.log(`[Agent response] : ${response.messages[response.messages.length - 1].content}`);
+    
 }
 
 main().catch(console.error);
