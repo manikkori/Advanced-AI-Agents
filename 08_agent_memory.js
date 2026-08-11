@@ -29,8 +29,12 @@ async function main(){
         temperature:0
     });
     
-    
-    
+    //3. agent setup 
+    const agent = createReactAgent({
+        llm:llm,
+        tools: [],
+        checkpointSaver:memory //memory saved
+    });
 
 }
 
