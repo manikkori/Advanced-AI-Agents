@@ -4,6 +4,7 @@ import { MemorySaver } from "@langchain/langgraph";
 import * as readline from "readline"; // nodejs inbuilt method for terminal input
 import "dotenv/config";
 import { resolve } from "dns";
+import { threadId } from "worker_threads";
 
 
 //terminal input setup
@@ -36,6 +37,13 @@ async function main(){
         checkpointSaver:memory //memory saved
     });
 
+    console.log("Memory Chatbot ready..\n");
+
+    //session ID
+    const config = {configurable : {thread_id: "chat_01"}};
+    
+    
+    
 }
 
 main().catch(console.error);
