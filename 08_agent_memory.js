@@ -5,6 +5,7 @@ import * as readline from "readline"; // nodejs inbuilt method for terminal inpu
 import "dotenv/config";
 import { resolve } from "dns";
 import { threadId } from "worker_threads";
+import { context } from "@langchain/core/utils/context";
 
 
 //terminal input setup
@@ -18,7 +19,7 @@ const askQestion = (query) => new Promise((resolve)=> rl.question(query, resolve
 
 async function main(){
 
-    console.log("\nAgent Memory starting...\n");
+    console.log("\nAgent Memory starting... wait.\n");
 
     //1. Memory setup
     const memory = new MemorySaver();
@@ -42,7 +43,36 @@ async function main(){
     //session ID
     const config = {configurable : {thread_id: "chat_01"}};
     
-    
+    while(true){
+
+        const userInput = await askQestion("You : ");
+
+        if(userInput.toLowerCase() === "exit"){
+            console.log("Byy!\n");
+            rl.close()
+            return;
+            
+        }
+
+        try {
+
+            const response = await agent.invoke({
+                messages:[
+                    {
+                        role:"user",
+                        content:userInput
+                    }
+                ]
+            }, config); //giving config to agent
+
+            console.log("[Agent answer] : ", response.messages[response.messages.length - 1].content);
+
+        } catch (error) {
+            console.log("error : ", error.messages);
+            
+        }
+
+    }
     
 }
 
