@@ -3,10 +3,6 @@ import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { MemorySaver } from "@langchain/langgraph";
 import * as readline from "readline"; // nodejs inbuilt method for terminal input
 import "dotenv/config";
-import { resolve } from "dns";
-import { threadId } from "worker_threads";
-import { context } from "@langchain/core/utils/context";
-
 
 //terminal input setup
 const rl = readline.createInterface({
