@@ -8,10 +8,31 @@ const llm = new ChatGroq({
     temperature:0
 });
 
+//first function - Streaming , typing effect 
+async function testStreaming(){
+
+    console.log("\n1. Streaming...\n");
+    const question = "Tell me Top 3 skills every MERN‑stack developer should master. in short";
+    console.log("- [User question] : ", question);
+
+    process.stdout.write("- [AI] : ");
+    
+    //llm se tukdo /chunks me data aayega, basically llm se stream mang rhe hai 
+    const stream = await llm.stream(question);
+
+    for await (const chunks of stream){
+        process.stdout.write(chunks.content);
+    }
+
+    console.log("\n---------------------end-----------------------------\n");
+
+
+}
+
 async function main(){
 
-    console.log("Everything is ok!");
-    
+    //callig first
+    testStreaming();
 
 }
 
