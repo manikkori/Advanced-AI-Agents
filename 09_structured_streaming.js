@@ -3,9 +3,9 @@ import { z } from "zod";
 import "dotenv/config";
 
 const llm = new ChatGroq({
-    apiKey: process.env.GROQ_API_KEY,
-    model: "openai/gpt-oss-20b",
-    temperature: 0
+    apiKey:process.env.GROQ_API_KEY,
+    model:"openai/gpt-oss-20b",
+    temperature:0,
 });
 
 //first function - Streaming , typing effect 
