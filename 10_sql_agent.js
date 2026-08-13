@@ -10,17 +10,16 @@ const llm = new ChatGroq({
 });
 
 /* 
-========================================================
-📂 DATABASE SCHEMA INFO (For Reference)
-========================================================
+-----database schema----
+(Table and data already exist in the Database)
+
 Table Name: ai_agent_students
 Columns:
 - id (INT) - Primary Key
 - name (VARCHAR)
 - marks (INT)
 - course (VARCHAR)
-(Note: Table and data already exist in the Aiven Database)
-========================================================
+
 */
 
 async function main() {
@@ -57,6 +56,14 @@ async function main() {
 
     const sqlQuery = await llm.invoke(prompt1);
     console.log(`[Generated query]: ${sqlQuery.content}`);
+
+    //3. execute query on database
+
+    const dbResult = await datasource.query(sqlQuery.content);
+    console.log("[Database Output]: ", dbResult);
+
+
+    
 
 }
 
