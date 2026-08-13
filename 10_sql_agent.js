@@ -36,7 +36,7 @@ async function main() {
     await datasource.initialize();
     console.log("Connected to database !\n");
 
-    const question = "tell me the name of the student whose name starts with 'M'."
+    const question = "tell me the name of the student whose study in BCA."
     console.log(`[User question]: ${question}\n`);
 
     //2. llm generates sql query
@@ -55,15 +55,27 @@ async function main() {
     `;
 
     const sqlQuery = await llm.invoke(prompt1);
-    console.log(`[Generated query]: ${sqlQuery.content}`);
+    console.log(`[Generated query]: ${sqlQuery.content}\n`);
 
     //3. execute query on database
 
     const dbResult = await datasource.query(sqlQuery.content);
-    console.log("[Database Output]: ", dbResult);
+    console.log("[Database Output]: ", dbResult, "\n");
 
+    //4. llm generate noraml answer according to database output
+    const prompt2 = `
+        You are a helpful assistant.
 
-    
+        The user ask : ${question},
+        the database return the data : ${JSON.stringify(dbResult)},
+
+        write a natural anaswer based on the content above. write a clean and short answer in hinglish or english based on the data provided. 
+        ! Do not prevent any extra infomation.
+    `
+    const normalAiResponse = await llm.invoke(prompt2);
+    console.log(`[Final Answer]: ${normalAiResponse.content}`);
+
+    await datasource.destroy()
 
 }
 
