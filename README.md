@@ -74,6 +74,21 @@ Place a sample PDF file (e.g., `example.pdf`) in the root directory for the RAG 
   Integrates a complete Retrieval-Augmented Generation (RAG) pipeline as a dynamically callable tool within the ReAct agent loop. 
   - **Core Concepts:** Agentic search refinement (self-correction/multi-querying), converting dense retrievers into executable tools, and context-aware answer generation.
   - **Tech Stack:** Combines `@langchain/langgraph` agent architecture with local HuggingFace embeddings (`all-MiniLM-L6-v2`) and in-memory vector stores. Utilizes `zod` to enforce strict query generation schemas for the LLM.
+
+* **`08_memory_agent.js` - Stateful Agent with Persistent Memory**
+  Implements persistent conversational memory across multiple turns, allowing the agent to remember past interactions, user context, and previous tool outputs. 
+  - **Core Concepts:** Thread state management, state persistence using graph checkpointers, and conversational history handling without overflowing token limits.
+  - **Tech Stack:** `@langchain/langgraph` (`MemorySaver` / Checkpointers), `@langchain/core` (Message History), and `@langchain/groq` for context-aware responses.
+
+* **`09_web_search_agent.js` - Autonomous Web Search & Scraping Agent**
+  Equips the ReAct agent with the ability to browse the live internet, fetch real-time data, and synthesize current information from multiple web sources.
+  - **Core Concepts:** Dynamic tool binding, handling external API latency, real-time data extraction, and synthesizing scattered internet data into coherent, factual answers.
+  - **Tech Stack:** `@langchain/community` tools (Tavily / DuckDuckGo Search), `@langchain/langgraph` for routing, and web scraping utilities for parsing live HTML data.
+
+* **`10_text_to_sql_pipeline.js` - Custom Functional Text-to-SQL Pipeline**
+  Bypasses black-box pre-built SQL toolkits to implement a highly reliable, hallucination-free, and custom database querying pipeline.
+  - **Core Concepts:** Two-step prompt engineering (Raw Query Generation + Natural Language Translation), bypassing strict LLM JSON parsing errors, SQL string sanitization (Regex cleaning), and safe database isolation.
+  - **Tech Stack:** `typeorm` and `mysql2` for secure cloud database connections (Aiven MySQL), and `@langchain/groq` for raw inference. Replaces standard `createReactAgent` with a custom functional flow for 10x reliability.
 ---
 
 ## 🚀 How to Run
