@@ -75,6 +75,20 @@ async function main() {
         
     }
 
+    //generate noraml answer 
+    const prompt2 = `
+        User ask question : ${question},
+        The database return the raw JSON data : ${JSON.stringify(dbResult)},
+
+        write a natural and clean answer in hinglish or enlglish depends on user question. do not prevent any extra information.
+    `;
+
+    const finalResponse = await llm.invoke(prompt2);
+
+    console.log("[Final Response] : ", finalResponse.content);
+    
+    
+
 
 
 
