@@ -19,7 +19,21 @@ async function main(){
     const collection = db.collection("ai_agent_student");
 
     console.log("mongoDB connected!\n");
-    
+
+    //insert Dummy data
+    const docCount = await collection.countDocuments();
+    if (docCount === 0) {
+        await collection.insertMany([
+            {name:"Manik", marks:85, course:"BCA"},
+            {name:"Manish", marks:85, course:"BCA"},
+            {name:"Mannu", marks:85, course:"BCA"},
+            {name:"Kaif", marks:85, course:"BCA"},
+        ]);
+        console.log("Data Inserted successfully!...\n");
+        
+    }
+
+
     
     await client.close();
 
