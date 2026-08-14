@@ -10,8 +10,18 @@ const llm = new ChatGroq({
 
 async function main(){
 
-    console.log("everything is ok!");
+    //connecting to mongodb 
+    console.log("\nConnecting to MongoDB...\n");
+    const client = new MongoClient(process.env.MONGO_URI);
+    await client.connect();
+
+    const db = client.db("agent_db");
+    const collection = db.collection("ai_agent_student");
+
+    console.log("mongoDB connected!\n");
     
+    
+    await client.close();
 
 }
 
