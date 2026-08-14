@@ -33,7 +33,7 @@ async function main() {
 
     }
 
-    const question = "tell me name of the student whos name starts with 'M' "
+    const question = "tell me marks of the student whos name is'Manik' "
     console.log(`[User question]: ${question}\n`);
 
     console.log("Ai is writing the  MongoDB query..\n");
@@ -58,8 +58,23 @@ async function main() {
     let jsonQuery = aiQuery.content.replace(/```/g, "").replace(/```/g, "").trim();
 
     console.log(`[Generated query] : ${jsonQuery}`);
+
+    console.log("Running query in DB..\n");
     
-    
+    // execute query in DB
+    let dbResult ;
+    try {
+        
+        const objQuery =  JSON.parse(jsonQuery);
+        dbResult = await collection.find(objQuery).toArray();
+        console.log(`[Database output]: ${JSON.stringify(dbResult)}\n`);
+        
+
+    } catch (error) {
+        console.log("Error", error);
+        
+    }
+
 
 
 
