@@ -80,15 +80,21 @@ Place a sample PDF file (e.g., `example.pdf`) in the root directory for the RAG 
   - **Core Concepts:** Thread state management, state persistence using graph checkpointers, and conversational history handling without overflowing token limits.
   - **Tech Stack:** `@langchain/langgraph` (`MemorySaver` / Checkpointers), `@langchain/core` (Message History), and `@langchain/groq` for context-aware responses.
 
-* **`09_web_search_agent.js` - Autonomous Web Search & Scraping Agent**
-  Equips the ReAct agent with the ability to browse the live internet, fetch real-time data, and synthesize current information from multiple web sources.
-  - **Core Concepts:** Dynamic tool binding, handling external API latency, real-time data extraction, and synthesizing scattered internet data into coherent, factual answers.
-  - **Tech Stack:** `@langchain/community` tools (Tavily / DuckDuckGo Search), `@langchain/langgraph` for routing, and web scraping utilities for parsing live HTML data.
+* **`09_structured_streaming.js` - Streaming & Structured Output Enforcement**
+  Core Concepts: Real-time token streaming (typing effect) and strict JSON schema enforcement for predictable, API-ready LLM outputs.
+  Tech Stack: Uses @langchain/groq and zod for schema definition. Implements `.stream()` for real-time response delivery and `.withStructuredOutput()` to guarantee the AI generates strictly formatted JSON data instead of raw Markdown.
 
-* **`10_text_to_sql_pipeline.js` - Custom Functional Text-to-SQL Pipeline**
-  Bypasses black-box pre-built SQL toolkits to implement a highly reliable, hallucination-free, and custom database querying pipeline.
-  - **Core Concepts:** Two-step prompt engineering (Raw Query Generation + Natural Language Translation), bypassing strict LLM JSON parsing errors, SQL string sanitization (Regex cleaning), and safe database isolation.
-  - **Tech Stack:** `typeorm` and `mysql2` for secure cloud database connections (Aiven MySQL), and `@langchain/groq` for raw inference. Replaces standard `createReactAgent` with a custom functional flow for 10x reliability.
+* **`10_sql_agent.js` - Autonomous Text-to-SQL Database Agent**
+  Core Concepts: Translating natural language queries into executable SQL commands, querying relational databases dynamically, and synthesizing database outputs into human-readable answers.
+  Tech Stack: Powered by @langchain/groq, typeorm, and mysql. Bridges the gap between traditional MERN stack relational databases and AI by securely generating and executing MySQL queries based on user intent.
+
+* **`11_mongo_agent.js` - Text-to-MongoDB NoSQL Agent*
+  Core Concepts: Converting natural language into complex MongoDB JSON query objects (e.g., `.find()` parameters), handling NoSQL database connections, and interpreting raw JSON responses into friendly natural language.
+  Tech Stack: Uses @langchain/groq and the native mongodb driver. Integrates seamlessly with the MERN stack's primary database layer to extract insights and analyze collections autonomously.
+
+* **`12_router_agent.js` - Intelligent Routing & Intent Classification Agent**
+  Core Concepts: Analyzing user intent at a high level and dynamically routing queries to the most appropriate sub-system, API, or tool. Acts as the "Traffic Controller" for multi-agent architectures.
+  Tech Stack: Integrates @langchain/groq and @langchain/community/tools/duckduckgo_search. Uses strict JSON-based decision making to classify requests and trigger specific isolated workflows (e.g., Live Weather API, Web Search, or General Chat).
 ---
 
 ## 🚀 How to Run
