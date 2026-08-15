@@ -42,7 +42,7 @@ async function aiRouter(userQuestion) {
 
     const response = await llm.invoke(prompt);
 
-    let  jsonString = response.content.replace(/```json/g, "").replace(/```/g,"").trim();
+    let jsonString = response.content.replace(/```json/g, "").replace(/```/g, "").trim();
 
     let decision;
     try {
@@ -54,9 +54,9 @@ async function aiRouter(userQuestion) {
     }
 
     console.log("Selected Route : ", decision.route, "\n");
-    if(decision.action_input){
+    if (decision.action_input) {
         console.log("Extracted data : ", decision.action_input, "\n");
-        
+
     }
     console.log("AI Reason : ", decision.reason, "\n");
 
@@ -65,7 +65,7 @@ async function aiRouter(userQuestion) {
     // weather
 
     if (decision.route === "weather_api") {
-        console.log(`Fetching live weather for : ${decision.action_input} \n` );
+        console.log(`Fetching live weather for : ${decision.action_input} \n`);
         try {
             const response = await fetch(`https://wttr.in/${decision.action_input}?format=3`);
             const rawresponse = await response.text();
@@ -74,14 +74,32 @@ async function aiRouter(userQuestion) {
 
             const finalPrompt = `User asked : ${userQuestion}, weather data is : ${rawresponse}, Give a short and clean answer in english.`;
             const answer = await llm.invoke(finalPrompt);
-            console.log("[Final Answer]: ",answer.content,"\n");
-            
-            
+            console.log("[Final Answer]: ", answer.content, "\n");
+
+
         } catch (error) {
             console.log("API error\n");
+
+        }
+
+    }
+
+    //web search tool
+    else if (decision.route === "web_search") {
+
+        try {
+            console.log(`Searching the internet : ${decision.action_input}\n`);
+            const searchResult = await webSearchTool.invoke(decision.action_input)
+            console.log(`Search Output: ${searchResult}\n`);
+
+            const finalPrompt = `User ask question : ${userQuestion}, web search data: ${searchResult}. write a clean and short answer in english.`
+            const asnwer = await llm.invoke(finalPrompt);
+            console.log("[Final Answer]: ", answer.content, "\n")
+        } catch (error) {
+            console.log("Error while searhing!");
             
         }
-        
+
     }
 
 }
@@ -89,6 +107,7 @@ async function aiRouter(userQuestion) {
 async function main() {
 
     await aiRouter("1. Will it rain in Hapur today?")
+    await aiRouter("2. Gold price today?")
 
 
 }
