@@ -53,12 +53,36 @@ async function aiRouter(userQuestion) {
         return;
     }
 
-    console.log("Selected Route : ", decision.route);
+    console.log("Selected Route : ", decision.route, "\n");
     if(decision.action_input){
-        console.log("Extracted data : ", decision.action_input);
+        console.log("Extracted data : ", decision.action_input, "\n");
         
     }
-    console.log("AI Reason : ", decision.reason);
+    console.log("AI Reason : ", decision.reason, "\n");
+
+    //2. tool execution 
+
+    // weather
+
+    if (decision.route === "weather_api") {
+        console.log(`Fetching live weather for : ${decision.action_input} \n` );
+        try {
+            const response = await fetch(`https://wttr.in/${decision.action_input}?format=3`);
+            const rawresponse = await response.text();
+
+            console.log("API  Output: ", rawresponse);
+
+            const finalPrompt = `User asked : ${userQuestion}, weather data is : ${rawresponse}, Give a short and clean answer in english.`;
+            const answer = await llm.invoke(finalPrompt);
+            console.log("[Final Answer]: ",answer.content,"\n");
+            
+            
+        } catch (error) {
+            console.log("API error\n");
+            
+        }
+        
+    }
 
 }
 
