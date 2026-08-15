@@ -102,12 +102,23 @@ async function aiRouter(userQuestion) {
 
     }
 
+    //general chat
+    else if(decision.route === "general_chat"){
+        const prompt = `User ask question : ${userQuestion}. Reply  naturally and  helpfully in english or hinglish depends on user provided data.`
+
+        const answer = await llm.invoke(prompt);
+
+        console.log(`[AI answer] : ${answer.content}`);
+        
+    }
+
 }
 
 async function main() {
 
     await aiRouter("1. Will it rain in Hapur today?")
     await aiRouter("2. Gold price today?")
+    await aiRouter("3. what is the role of invoke method in langchain? give a short answer.")
 
 
 }
