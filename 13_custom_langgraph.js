@@ -28,16 +28,27 @@ async function writerNode(state) {
 
 }
 //b. Reviewer node
-async function reviewerNode(state){
+async function reviewerNode(state) {
 
     console.log(`[Reviewer Node]: checking the draft...`);
-    const prompt = `Write a short, natural review for this content: ${state.draft}`;
+    const prompt = `Review this draft and give a strict 1-line feedback (Good/Bad and why):\nDraft: ${state.draft}`;
     const response = await llm.invoke(prompt);
 
     //update reviewerNode
-    return {review: response.content}
+    return { review: response.content }
 
 }
+
+//build custom graph
+const workflow = new StateGraph(stateGraph)
+    .addNode("writer", writerNode)
+    .addNode("reviewer", reviewerNode)
+    .addEdge(START, "writer")
+    .addEdge("writer", "reviewer")
+    .addEdge("reviewer", END)
+
+const app = workflow.compile();
+
 
 async function main() {
     console.log("everything is ok!");
