@@ -30,7 +30,7 @@ async function writerNode(state) {
 //b. Reviewer node
 async function reviewerNode(state) {
 
-    console.log(`[Reviewer Node]: checking the draft...`);
+    console.log(`[Reviewer Node]: checking the draft...\n`);
     const prompt = `Review this draft and give a strict 1-line feedback (Good/Bad and why):\nDraft: ${state.draft}`;
     const response = await llm.invoke(prompt);
 
@@ -51,7 +51,17 @@ const app = workflow.compile();
 
 
 async function main() {
-    console.log("everything is ok!");
+
+    const userInput = "Future of AI agents."
+
+    const result = await app.invoke({ topic: userInput });
+
+    console.log("\nFinal output...\n");
+    console.log(`Topic : ${result.topic}\n`);
+    console.log(`Draft : ${result.draft}\n`);
+    console.log(`Review : ${result.review}`);
+    
+    
 
 }
 main().catch(console.error);
