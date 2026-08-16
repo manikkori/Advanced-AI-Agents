@@ -9,6 +9,13 @@ const llm = new ChatGroq({
     temperature:0.7,
 });
 
+//2. define state , graph's globle memory
+const stateGraph = Annotation.Root({
+    topic:Annotation(),
+    draft:Annotation(),
+    review:Annotation()
+});
+
 async function main(){
     console.log("everything is ok!");
     
