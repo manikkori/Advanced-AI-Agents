@@ -27,7 +27,17 @@ async function writerNode(state) {
     return { draft: response.content }
 
 }
+//b. Reviewer node
+async function reviewerNode(state){
 
+    console.log(`[Reviewer Node]: checking the draft...`);
+    const prompt = `Write a short, natural review for this content: ${state.draft}`;
+    const response = await llm.invoke(prompt);
+
+    //update reviewerNode
+    return {review: response.content}
+
+}
 
 async function main() {
     console.log("everything is ok!");
