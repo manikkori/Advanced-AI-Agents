@@ -71,7 +71,7 @@ async function senderNode(state){
         console.log("Error: ",error.message );
         
     }
-    
+    return {};
 
 }
 
