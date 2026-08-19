@@ -105,7 +105,10 @@ async function main() {
 
     //1. run graph(interrupt before sender) 
     await app.invoke(initialInput, config);
-    
+
+    //2. get current state
+    const currentState = await app.getState(config);
+    const nextNode = currentState.next[0];
 
     rl.close()
 
