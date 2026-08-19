@@ -99,8 +99,8 @@ async function main() {
     const config = { configurable: { thread_id: "email_01" } };
 
     const initialInput = {
-        recipient_email:"manikkori697@gmail.com",
-        topic:"Say good morning. "
+        recipient_email: "manikkori697@gmail.com",
+        topic: "Say good morning. "
     }
 
     //1. run graph(interrupt before sender) 
@@ -110,6 +110,25 @@ async function main() {
     const currentState = await app.getState(config);
     const nextNode = currentState.next[0];
 
+    if (nextNode === "sender") {
+        console.log("\n==================================================");
+        console.log("⚠️  [SECURITY ALERT - APPROVAL REQUIRED] ⚠️");
+        console.log("==================================================");
+        console.log(`📤 To: ${currentState.values.recipient_email}`);
+        console.log(`✉️  AI Draft:\n\n${currentState.values.drafted_email}`);
+        console.log("==================================================\n");
+
+        // 3: Ask for real permission
+        const answer = await askQuestion(`Do you want to actually send this email? (Y/N): `);
+
+        if (answer.toLowerCase() === 'y') {
+            console.log("\n✅ Approved! Handing over to Nodemailer...");
+            // resume the graph(rerun))
+            await app.invoke(null, config);
+        } else {
+            console.log("\n❌ Cancelled! The email was safely destroyed.");
+        }
+    }
     rl.close()
 
 }
