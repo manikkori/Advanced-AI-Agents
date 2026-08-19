@@ -86,7 +86,15 @@ const workflow = new StateGraph(GraphState)
     .addEdge("sender", END)
 
 
-    
+
+//interrupt before send 
+const app = workflow.compile({
+    checkpointer:memory,
+    interruptBefore:["sender"]
+});
+
+
+
 async function main(){
 
     console.log("everything is ok!");
