@@ -50,6 +50,31 @@ async function drafterNode(state){
 
 }
 
+//node B: email sender
+async function senderNode(state){
+
+    console.log("Sending email...\n");
+    try {
+        const mailOptions ={
+            from:process.env.EMAIL_USER,
+            to:state.recipient_email,
+            subject:"AI Automated Message", //mail subject
+            text:state.drafted_email,
+        };
+
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`[Success] email officially send to : ${state.recipient_email}...\n `);
+        console.log(`Message ID: ${info.messageId}`);
+        
+        
+    } catch (error) {
+        console.log("Error: ",error.message );
+        
+    }
+    
+
+}
+
 
 async function main(){
 
