@@ -75,7 +75,18 @@ async function senderNode(state){
 
 }
 
+//build the graph
+const memory = new MemorySaver();
 
+const workflow = new StateGraph(GraphState)
+    .addNode("drafter", drafterNode)
+    .addNode("sender", senderNode)
+    .addEdge(START, "drafter")
+    .addEdge("drafter", "sender")
+    .addEdge("sender", END)
+
+
+    
 async function main(){
 
     console.log("everything is ok!");
