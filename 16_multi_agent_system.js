@@ -9,6 +9,16 @@ const llm = new ChatGroq({
     temperature:0.2
 });
 
+//2. define graph state
+const GraphState = Annotation.Root({
+    task:Annotation(),
+    code:Annotation(),
+    feedback:Annotation(),
+    status:Annotation(),
+    iteration:Annotation()
+});
+
+
 async function main(){
 
     console.log("everything is ok!");
