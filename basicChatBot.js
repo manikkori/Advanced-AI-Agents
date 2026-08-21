@@ -23,6 +23,13 @@ async function main(){
     while(true){
         
         const userInput = await readline.question("User : ");
+
+        if(userInput.toLowerCase() === "exit"){
+            console.log("BYE!");
+            readline.close();
+            return;
+        }
+
         messages.push(new HumanMessage(userInput))
 
         const response = await llm.invoke(messages);
