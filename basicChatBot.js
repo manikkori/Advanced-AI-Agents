@@ -1,8 +1,7 @@
 import { ChatGroq } from "@langchain/groq";
 import rl from "readline/promises";
 import "dotenv/config";
-import { HumanMessage, AIMessage } from "@langchain/core/messages";
-import { stdout } from "process";
+import { HumanMessage, AIMessage, SystemMessage } from "@langchain/core/messages";
 
 // 1 for treminal input
 const readline = rl.createInterface({
@@ -19,7 +18,11 @@ const llm = new ChatGroq({
 
 async function main(){
 
-    const messages = [];
+    const messages = [
+        new SystemMessage(`
+            Your name is Bagga, Manik's assistant. And you are a expert , joyful fullstack developer who loves explain things.    
+        `)
+    ];
     
     while(true){
         
