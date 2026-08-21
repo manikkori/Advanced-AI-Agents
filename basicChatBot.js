@@ -9,12 +9,21 @@ const readline = rl.createInterface({
     output:process.stdout
 });
 
-
+//2. setup llm
+const llm = new ChatGroq({
+    apiKey:process.env.GROQ_API_KEY,
+    model:"openai/gpt-oss-20b",
+    temperature:0.7
+});
 
 async function main(){
 
     const userInput = await readline.question("User : ");
-    console.log(userInput);
+    
+    const response = await llm.invoke(userInput);
+
+    console.log(`[AI]: ${response.content}`);
+    
     readline.close();
 
 }
