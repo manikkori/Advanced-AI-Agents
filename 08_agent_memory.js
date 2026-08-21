@@ -1,7 +1,7 @@
 import { ChatGroq } from "@langchain/groq";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { MemorySaver } from "@langchain/langgraph";
-import * as readline from "readline"; // nodejs inbuilt method for terminal input
+import * as readline from "readline/promises"; // nodejs inbuilt method for terminal input
 import "dotenv/config";
 
 //terminal input setup
@@ -9,9 +9,6 @@ const rl = readline.createInterface({
     input:process.stdin,
     output:process.stdout
 });
-
-//function - waiting to type in the terminal.
-const askQestion = (query) => new Promise((resolve)=> rl.question(query, resolve));
 
 async function main(){
 
@@ -41,7 +38,7 @@ async function main(){
     
     while(true){
 
-        const userInput = await askQestion("You : ");
+        const userInput = await rl.question("You : ");
 
         if(userInput.toLowerCase() === "exit"){
             console.log("Byy!\n");
