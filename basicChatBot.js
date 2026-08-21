@@ -18,11 +18,23 @@ const llm = new ChatGroq({
 
 async function main(){
 
-    const userInput = await readline.question("User : ");
+    const messages = [];
     
-    const response = await llm.invoke(userInput);
+    while(true){
+        
+        const userInput = await readline.question("User : ");
+        messages.push(new HumanMessage(userInput))
 
-    console.log(`[AI]: ${response.content}`);
+        const response = await llm.invoke(messages);
+        
+        console.log(`[AI]: ${response.content}`);
+        let aiResponse = response.content;
+        messages.push(new AIMessage(aiResponse))
+
+    }
+
+
+
     
     readline.close();
 
