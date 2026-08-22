@@ -7,6 +7,7 @@ import {z} from "zod";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { exec } from "child_process";
 import { promisify } from "util";
+import { MemorySaver } from "@langchain/langgraph";
 
 
 const execPromise = promisify(exec);
@@ -127,21 +128,22 @@ STRICT RULES:
 note: html files run the 'start' command! 
 `;
 
+const memory = new MemorySaver();
 
 //4. create the langgraph reAct agent
 const agent = createReactAgent({
     llm:llm,
     tools:tools,
-    messageModifier:systemMessage
-
+    messageModifier:systemMessage,
+    checkpointSaver: memory
 })
 
 async function main() {
 
-    console.log("FileSystem(developer) agent is ready!...\n");
-
-    readline.question("You: ", async (userInput) => {
-
+    
+    const config = {configurable : {thread_id: "user_01"}}
+    
+    readline.question("You: ", async (userInput) => {        
         if(userInput.toLowerCase() === "exit"){
             console.log("BYE!");
             rl.close();
@@ -156,7 +158,7 @@ async function main() {
                     role:"user",
                     content:userInput
                 }]
-            });
+            }, config);
 
             console.log("\n[Agent final Response]: \n");
             console.log(response.messages[response.messages.length - 1].content);
@@ -166,8 +168,8 @@ async function main() {
             
         }
 
-        readline.close();
+        main();
     });
 }
-
+console.log("FileSystem(developer) agent is ready!(type exit tp quit)...\n");
 main().catch(console.error)
