@@ -1,9 +1,9 @@
 import { ChatGroq } from "@langchain/groq";
 import { tool } from "@langchain/core/tools";
 import "dotenv/config";
-import * as rl from "readline/promises";
+import * as rl from "readline";
 import * as fs from "fs/promises"
-import * as z from "zod";
+import {z} from "zod";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 
 const readline = rl.createInterface({
@@ -64,8 +64,36 @@ const agent = createReactAgent({
 
 async function main() {
 
-    console.log("Everything is ok!");
-    readline.close();
+    console.log("FileSystem(developer) agent is ready!...\n");
+
+    readline.question("You: ", async (userInput) => {
+
+        if(userInput.toLowerCase() === "exit"){
+            console.log("BYE!");
+            rl.close();
+            return;
+        }
+
+        console.log("\nAgent is thinking/working wait...");
+        
+        try {
+            const response = await agent.invoke({
+                messages:[{
+                    role:"user",
+                    content:userInput
+                }]
+            });
+
+            console.log("\n[Agent final Response]: \n");
+            console.log(response.messages[response.messages.length - 1].content);
+            
+        } catch (error) {
+            console.log("[Error]:", error.message);
+            
+        }
+
+        readline.close();
+    });
 }
 
 main().catch(console.error)
