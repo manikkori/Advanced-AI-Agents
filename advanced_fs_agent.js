@@ -22,7 +22,7 @@ const llm = new ChatGroq({
 //a. create and write file
 const createFileTool = tool(
     async ({ file_name, content }) => {
-        console.log(`[AI]: Creating file: ${file_name}...\n`);
+        console.log(`\n[tool]: Creating file: ${file_name}...\n`);
         try {
             await fs.writeFile(file_name, content, "utf-8");
             return `Success: file ${file_name} created successfully.`;
@@ -42,7 +42,27 @@ const createFileTool = tool(
     }
 );
 
-const tools = [createFileTool];
+//b. readfile
+const readFileTool = tool(
+    async ({file_name}) => {
+        console.log(`\n[Tool]: reading file: ${file_name}...`);
+        try{
+            const content = await fs.readFile(file_name, "utf-8");
+            return `read file success : file name : ${file_name}, content: ${content}`;
+        }catch(error){
+            return `[error] : ${error}`
+        }
+    },
+    {
+        name:"read_file",
+        description:"Reads the content, code of an existing file.",
+        schema: z.object({
+            file_name: z.string().describe("name of the file example -> script.js, index.html, my.txt")
+        })
+    }
+)
+
+const tools = [createFileTool, readFileTool];
 
 //3. system prompt 
 const systemMessage = `You are a Senior Autonomous Developer AI with full file system and terminal access. 
