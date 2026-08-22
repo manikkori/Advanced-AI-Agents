@@ -20,7 +20,7 @@ const readline = rl.createInterface({
 const llm = new ChatGroq({
     apiKey: process.env.GROQ_API_KEY,
     model: "openai/gpt-oss-120b",
-    temperature: 0.2
+    temperature: 0
 });
 
 //2. define tool 
@@ -92,10 +92,29 @@ const executeCommandTool = tool(
     }
 );
 
-const tools = [createFileTool, readFileTool, executeCommandTool];
+//d. delete file
+const deleteFileTool = tool(
+    async ({file_name}) => {
+        console.log(`[tool] : Deleting file : ${file_name}...`);
+        try {
+            await fs.unlink(file_name);
+            return `Seccess: file deleted!`
+        } catch (error) {
+            return `error : ${error}`;
+        }
+    },
+    {
+        name:"delete_file",
+        description:"deletes a file from  the system",
+        schema: z.object({
+            file_name: z.string().describe("name of the file.")
+        })
+    }
+)
+
+const tools = [createFileTool, readFileTool, executeCommandTool, deleteFileTool];
 
 //3. system prompt 
-// 3. System Prompt (The strict brain of the AI)
 const systemMessage = `You are a Senior Autonomous Developer AI with full file system and terminal access. 
 Your goal is to complete the user's task efficiently without expecting them to do the manual work.
 
