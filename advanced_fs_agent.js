@@ -4,6 +4,7 @@ import "dotenv/config";
 import * as rl from "readline/promises";
 import * as fs from "fs/promises"
 import * as z from "zod";
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
 
 const readline = rl.createInterface({
     input: process.stdin,
@@ -52,6 +53,14 @@ STRICT RULES:
 2. If the user does not provide a file extension, smartly guess the correct extension based on the content (e.g., .txt for text, .js for javascript).
 3. If execution fails or throws an error, you MUST read the error, rewrite/fix the code in the file, and execute it again. Keep doing this until it runs successfully.`;
 
+
+//4. create the langgraph reAct agent
+const agent = createReactAgent({
+    llm:llm,
+    tools:tools,
+    messageModifier:systemMessage
+
+})
 
 async function main() {
 
